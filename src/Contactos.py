@@ -1,21 +1,35 @@
 #!/usr/bin/env python
 
 import comun
+class ContactosError(Exception):
+    def __init__(self,m):
+        self.__mensaje = m
+    
+    def mensaje(self):
+        return self.__mensaje
 
 class Contactos:
     def __init__(self, prop):
-        self.propietario = prop # ID del usuario dueno de la lista de contactos
-        self.lista = {}
+        self.__propietario = prop # ID del usuario dueno de la lista de contactos
+        self.__lista = {}         # La lista de contactos sera un Diccionario donde el id del usuario
+                                  # sera la llave de sus datos.
         
         
-    def agregaContacto(self,id,nombre,estado):
+    def agregaContacto(self, id, nombre, estado=comun.DESCONECTADO, mensaje='', imagen=''):
         # Lo primero que tenemos que hacer es verificar que este ID de usuario
         # existe en la base de datos de usuarios, de lo contrario, no se puede
         # agregar, pero se sugiere se mande un correo al usuario.
         # Para hacer eso es necesario hacer una consulta al servidor, enviandole 
         # el username del contacto
         print "Dentro de agrega contacto"
-        return False
+        if self.__mismo(id):      # Verificamos que el contacto no soy yo mismo
+            raise ContactosError("No se puede agregar al mismo usuario como contacto de si mismo")
+        elif self.__existe(id):   # Verificamos que el contacto no exista previamente en la lista
+            raise ContactosError("Este contacto ya forma parte de la lista de contactos")
+        else:                     # Aqui es donde agregamos el nuevo contacto a nuestra lista
+            self.__lista[id] = {"nombre":nombre,"estado":estado,"mensaje":mensaje,"imagen":imagen}
+            return True
+        
         
         
         # Antes de agregar el contacto es necesario verificar que no esta en la
@@ -26,12 +40,71 @@ class Contactos:
     
     def eliminaContacto(self, id):
         print "Dentro de elimina contacto"
+        if self.__existe(id):
+            return self.__lista.pop(id)
+        else:
+            raise ContactosError("Numero de identificacion de contacto invalido")
+  
+    def destruyeContactos(self):
+        print "Dentro de destruye contactos"
+        self.__lista.clear()
         
-    def consultaContacto(self,id):
-        return False
+    def cuentaContactos(self):
+        print "Dentro de cuenta contactos"
+        return len(self.__lista)
+        
     
-    def modificaContacto(self, id):
-        print "Dentro de modifica contacto"
+    def consultaContacto(self,id):
+        if self.__existe(id):
+            return (id, self.__lista[id]["nombre"])
+        else:
+            raise ContactosError("Numero de identificacion de  invalido")
+    
+    def modificaNombre(self, id, nombre):
+        print "Dentro de modifica nombre"
+        # Seria bueno verificar que se esta dando de nombre nuevo, algunas caracteristicas que debe cumplir
+        #  - Que sea minimo 3 letras o numeros
+        #  - Otra caracteristica?
+        assert (len(name) > 2), "Nombre del contacto no puede ser menor que 3 caracteres"
+        
+        if self.__existe(id):
+            self.__lista[id] ["nombre"] = nombre  
+            return (id, self.__lista[id]["nombre"])
+        else:
+            raise ContactosError("Numero de identificacion de  invalido")
+        
+    def modificaEstado(self,id,estado):
+        print "Dentro de modifica estado"
+        if estado in comun.ESTADOS:
+            if self.__existe(id):
+                self.__lista[id] ["estado"] = estado  
+                return (id, self.__lista[id]["mensaje"])
+            else:
+                raise ContactosError("Numero de identificacion de  invalido")  
+        else: raise ContactosError("Este no es un estado valido del sistema")
+        
+    def modificaMensaje(self,id,mensaje):
+        print "Dentro de modifica mensaje"
+        # Seria bueno verificar que se esta dando de nombre nuevo, algunas caracteristicas que debe cumplir
+        #  - Que sea minimo 3 letras o numeros
+        #  - Otra caracteristica?        
+        if self.__existe(id):
+            self.__lista[id] ["mensaje"] = mensaje  
+            return (id, self.__lista[id]["mensaje"])
+        else:
+            raise ContactosError("Numero de identificacion de  invalido")
+        
+    def modificaImagen(self,id,imagen):
+        print "Dentro de modifica mensaje"
+        # Seria bueno verificar que se esta dando de nombre nuevo, algunas caracteristicas que debe cumplir
+        #  - Que sea minimo 3 letras o numeros
+        #  - Otra caracteristica?        
+        if self.__existe(id):
+            self.__lista[id] ["mensaje"] = mensaje  
+            return (id, self.__lista[id]["mensaje"])
+        else:
+            raise ContactosError("Numero de identificacion de  invalido")
+        
         
     def enviaMensaje(self, id, mens):
         print "Dentro de envia mensaje"
@@ -47,24 +120,26 @@ class Contactos:
         Solo es necesario ver si el ID de este usuario se encuentra entre las 
         llaves del diccionario de contactos.
         '''
-        return True
+        return self.__lista.has_key(id)   # Devuelve True en caso que este usuario ya forma parte de los contactos.
 
-    def __mismo(self):
+    def __mismo(self,id):
         '''
         El proposito de este metodo privado es que la lista de contactos no puede 
         tener como contacto al duenio de la misma.
         '''
-        return True
+        if self.__propietario == id:
+            return True
+        else: return False
         
     def devuelveContactos(self):
-        return self.lista
+        return self.__lista
         
     def duenoContactos(self):
         '''
         El proposito de este metodo es devolver el ID del usuario propietario de 
         esta lista de contactos. 
         '''
-        return self.propietario
+        return self.__propietario
     
 if __name__ == '__main__':
     print "Nothing"
