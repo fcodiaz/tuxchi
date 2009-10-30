@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+# Autor: Fco Diaz
+# Fecha: Oct/2009
+# Detalles: la clase Contactos esta destinada a brindar toda la funcionalidad
+# necesaria a la lista de contactos de cada usuario; esta se encuentra en el 
+# cliente.
 
 import comun
 class ContactosError(Exception):
@@ -95,23 +100,24 @@ class Contactos:
             raise ContactosError("Numero de identificacion de  invalido")
         
     def modificaImagen(self,id,imagen):
-        print "Dentro de modifica mensaje"
-        # Seria bueno verificar que se esta dando de nombre nuevo, algunas caracteristicas que debe cumplir
-        #  - Que sea minimo 3 letras o numeros
-        #  - Otra caracteristica?        
+        print "Dentro de modifica imagen" 
         if self.__existe(id):
-            self.__lista[id] ["mensaje"] = mensaje  
-            return (id, self.__lista[id]["mensaje"])
+            self.__lista[id] ["imagen"] = imagen  
+            return (id, self.__lista[id]["imagen"])
         else:
             raise ContactosError("Numero de identificacion de  invalido")
         
-        
+    # Creo que envia mensaje es un metodo que no solo necesita saber a que
+    # contacto se desea enviar el mensaje, pero tambien la conexion del servidor
+    # es importante, dado que es este quien al final se encarga de enviar el
+    # mensaje. Asi que creo que uno de los parametros de este metodo debe ser
+    # tambien el objeto que se crea e identifica al servidor.
     def enviaMensaje(self, id, mens):
         print "Dentro de envia mensaje"
         
     def solicitaAutorizacion(self, id):
         print "Dentro de envia mensaje"
-        
+    
     def aceptaAutorizacion(self, id):
         print "Dentro de acepta autorizacion"
     
