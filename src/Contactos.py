@@ -5,6 +5,7 @@
 # necesaria a la lista de contactos de cada usuario; esta se encuentra en el 
 # cliente.
 
+
 import comun
 class ContactosError(Exception):
     def __init__(self,m):
