@@ -7,7 +7,7 @@ import sys
 sys.path.append("../src")
 
 # Importamos nuestros archivos de mod
-import Contactos
+import Usuario
 import comun
 
 
@@ -15,7 +15,7 @@ USUARIO = "fcodiaz"
 CONTRASENA = "test123"
 
 
-class ContactosTest(unittest.TestCase):
+class UsuarioTest(unittest.TestCase):
     userID = hashlib.sha224(USUARIO)
     passwd = hashlib.sha224(CONTRASENA)    
 
@@ -37,26 +37,6 @@ class ContactosTest(unittest.TestCase):
         #C = Contactos.Contactos(self.userID)
 
         self.assertEqual(self.C.duenoContactos(),self.userID)
-        
-    def runTestDevuelveContactos(self):
-        #C = Contactos.Contactos(self.userID)
-
-        self.assertEqual(type(self.C.devuelveContactos()),type({}))
-        
-    def runAgregaContacto(self):
-        #C = Contactos.Contactos(self.userID)
-        self.C.agregaContacto(self.contactoID, self.contactoNombre, self.contactoEstado)
-        self.assertEqual(self.C.consultaContacto(self.contactoID),(self.contactoID, self.contactoNombre))
-
-        
-    def runEliminaContacto(self):
-        """
-        Test eliminate a contact
-        """
-        #C = Contactos.Contactos(self.userID)
-        self.C.agregaContacto(self.contactoID, self.contactoNombre, self.contactoEstado)
-        self.C.eliminaContacto(self.contactoID)
-        self.assertRaises(Contactos.ContactosError,self.C.consultaContacto,self.contactoID)        
         
 def suite():
     suite = unittest.TestSuite()

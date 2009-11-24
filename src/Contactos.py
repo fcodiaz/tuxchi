@@ -7,6 +7,7 @@
 
 
 import comun
+
 class ContactosError(Exception):
     def __init__(self,m):
         self.__mensaje = m
@@ -21,7 +22,7 @@ class Contactos:
                                   # sera la llave de sus datos.
         
         
-    def agregaContacto(self, id, nombre, estado=comun.DESCONECTADO, mensaje='', imagen=''):
+    def agregaContacto(self, id, nombre, estado=comun.ESTADOS.DESCONECTADO, mensaje='', imagen=''):
         # Lo primero que tenemos que hacer es verificar que este ID de usuario
         # existe en la base de datos de usuarios, de lo contrario, no se puede
         # agregar, pero se sugiere se mande un correo al usuario.
@@ -65,6 +66,12 @@ class Contactos:
             return (id, self.__lista[id]["nombre"])
         else:
             raise ContactosError("Numero de identificacion de  invalido")
+        
+    def consultaEstado(self, id):
+        if self.__existe(id):
+            return (self.__lista["estado"])
+        else:
+            raise ContactosError("Contacto no existe en lista de contactos")
     
     def modificaNombre(self, id, nombre):
         print "Dentro de modifica nombre"
@@ -115,7 +122,16 @@ class Contactos:
     # tambien el objeto que se crea e identifica al servidor.
     def enviaMensaje(self, id, mens):
         print "Dentro de envia mensaje"
+        # Una de las primeras cosas que se debe hacer es ver el estado del contacto antes de intentar enviar el 
+        # mensaje a este usuario. Si el usuario esta Desconectado entonces debe notificarse que no se puede enviar
+        # el mensaje. Lo que se puede hacer es guardar el mensaje para mandarlo cuando el usuario este disponible.
+        if consultaEstado(id) != comun.ESTADO.DESCONECTAD:
+            # Contacta al servidor para enviar el mensaje
+            server.enviaMensaje()  #FIXME!!!
+        else:
+            raise ContactosError("Contacto se encuentra Desconectado, mensaje no fue enviador")
         
+                
     def solicitaAutorizacion(self, id):
         print "Dentro de envia mensaje"
     
