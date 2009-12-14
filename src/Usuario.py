@@ -49,6 +49,9 @@ class Usuario:
     def cambiaEstado(self, estado):
         self.estado = estado
         
+    def consultaEstado(self):
+        return self.estado
+        
     def cambiaImagen(self,imagen):
         self.imagen = imagen
         
