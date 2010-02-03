@@ -65,8 +65,9 @@ class Comandos:
         Este sera el loop principal del interprete de comandos, basicamente es un loop infinito hasta que se da
         el comando de salida del sistema, de lo contrario, este seguira pidiendo comandos; en caso que algun comando
         falle o la entrada sea incorrecta, el sistema debe reportar el error, no abortarse y continuar con normalidad
-        """
 
+        """
+ # FIXME
         
         
         
