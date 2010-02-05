@@ -12,3 +12,4 @@ class MensajeError(Exception):
         return self.__mensaje
 
 class Mensaje:
+    def __init__(self, mens, remite, destino,):
