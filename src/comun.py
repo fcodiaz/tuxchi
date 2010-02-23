@@ -1,4 +1,4 @@
-
+import pickle
 
 # Constantes del sistema
 
@@ -17,3 +17,9 @@ PARAM = {"puerto":12345, \
 
 # Estados del Usuario
 ESTADOS=(DESCONECTADO, CONECTADO, OCUPADO, AUSENTE, INVISIBLE, NOMOLESTAR) = (0, 1, 2, 3, 4, 5)
+
+def serialize(obj):
+    return pickle.dumps(m)
+
+def unserialize(str):
+    return pickle.loads(str)

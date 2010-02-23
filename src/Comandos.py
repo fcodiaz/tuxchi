@@ -50,15 +50,24 @@ class Comandos:
                     U.cambiaEstado('CONECTADO')
                 else: return "Usuario o contrasenia incorrectos"
             elif comando == 'estado':
-                if temp.lower() == 'estatus':
+                accion = temp.lower()
+                if  accion == 'estatus':
                     U.consultaEstado()
+                elif accion in ['desconectado','ocupado','nodisponible']:
+                    U.cambiaEstado(accion)
             elif comando == 'mensaje':
+                destino,texto = temp.split(" ",1)
+                try:
+                    C.consultaContacto(destino)
+                except:
+                    
                 
-            elig comando == 'contacto':
+            elif comando == 'contacto':
             
         
         
     def ingresoSistema(usuario, contrasena):
+        
         
         
         
