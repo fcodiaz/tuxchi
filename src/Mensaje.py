@@ -45,3 +45,5 @@ if __name__ == '__main__':
     m3 = Mensaje(0,2,5,"Tercer mensaje de prueba")
     m4 = Mensaje(0,2,10,"Cuarto mensaje de prueba")
     print m4
+
+    def __init__(self, mens, remite, destino,):
