@@ -38,6 +38,8 @@ class Cliente:
         
     def cerrar(self):
         
+    def info(self):
+        
     
 if __name__ == "__main__":
     miCliente = Cliente()
